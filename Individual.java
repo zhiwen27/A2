@@ -63,8 +63,8 @@ public class Individual {
 
       this.chromosome = new ArrayList<Character>();
 
-      int prefix = ThreadLocalRandom.current().nextInt(0, parent1.chromosome.size() + 1);
-      int suffix = ThreadLocalRandom.current().nextInt(0, parent2.chromosome.size() + 1);
+      int prefix = ThreadLocalRandom.current().nextInt(1, parent1.chromosome.size() + 1);
+      int suffix = ThreadLocalRandom.current().nextInt(1, parent2.chromosome.size() + 1);
       
       for(int i = 0; i < prefix; i++){
         this.chromosome.add(parent1.chromosome.get(i));
@@ -94,9 +94,13 @@ public class Individual {
      */
     public int getFitness() {
       int score = 0;
-      if (this.chromosome.size()%2 == 0){
-        for(int i = 0; i < this.chromosome.size() / 2; i++){
-          if (this.chromosome.get(i).equals(this.chromosome.get(this.chromosome.size() - i - 1))){
+      ArrayList<Character> chromosomeCopy = new ArrayList<Character>();
+      for(int i = 0; i < this.chromosome.size(); i++){
+        chromosomeCopy.add(this.chromosome.get(i));
+      }
+      if (chromosomeCopy.size()%2 == 0){
+        for(int i = 0; i < chromosomeCopy.size() / 2; i++){
+          if (chromosomeCopy.get(i).equals(chromosomeCopy.get(chromosomeCopy.size() - i - 1))){
             score += 1;
           }
           else{
@@ -105,9 +109,9 @@ public class Individual {
         }
       }
       else{
-        this.chromosome.add((this.chromosome.size() - 1) / 2, this.chromosome.get((this.chromosome.size() - 1) / 2));
-        for(int i = 0; i < this.chromosome.size() / 2; i++){
-          if (this.chromosome.get(i).equals(this.chromosome.get(this.chromosome.size() - i - 1))){
+        chromosomeCopy.add((chromosomeCopy.size() - 1) / 2, chromosomeCopy.get((chromosomeCopy.size() - 1) / 2));
+        for(int i = 0; i < chromosomeCopy.size() / 2; i++){
+          if (chromosomeCopy.get(i).equals(chromosomeCopy.get(chromosomeCopy.size() - i - 1))){
             score += 1;
           }
           else{
@@ -115,11 +119,16 @@ public class Individual {
           }
         }
       }
-      for (int i = 0; i < this.chromosome.size() - 1; i++){
-        if (this.chromosome.get(i).equals(this.chromosome.get(i + 1))){
+      for (int i = 0; i < chromosomeCopy.size() - 1; i++){
+        if (chromosomeCopy.get(i).equals(chromosomeCopy.get(i + 1))){
           score -= 1;
         }
       }
       return score;
+    }
+
+    public static void main(String[] args) {
+      Individual a = new Individual(3, 3);
+      System.err.println(a.getFitness());
     }
 }
