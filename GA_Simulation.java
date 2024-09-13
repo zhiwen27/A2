@@ -95,12 +95,16 @@ public class GA_Simulation {
    * @param gen the generation you want to describe
    */
   public void describeGeneration(ArrayList<Individual> gen){
-    this.rankPopulation(gen);
+    this.rankPopulation(gen); // will rank the population first inside describeGeneration
     System.err.println("The fitness of the fittest individual is: " + gen.getFirst().getFitness() + ", with its actual chromosome to be: " + gen.getFirst());
     System.err.println("The fitness of the kth individual is: " + gen.get(k - 1).getFitness() + ", with its actual chromosome to be: " + gen.get(k - 1));
     System.err.println("The fitness of the least fit individual is: " + gen.getLast().getFitness() + ", with its actual chromosome to be: " + gen.getLast());
   }
 
+  /**
+   * Run the entire experiment by initializing the population, then rank it and describe it.
+   * For each round, it will evolve the population, rank it, and describe it.
+   */
   public void run(){
     this.init();
     System.err.println("Generation 1:");
