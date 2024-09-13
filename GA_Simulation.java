@@ -42,7 +42,7 @@ public class GA_Simulation {
   */
     public void rankPopulation(ArrayList<Individual> pop) {
         // sort population by fitness
-        Comparator<Individual> ranker = new Comparator<>() { // ❗️❗️
+        Comparator<Individual> ranker = new Comparator<>() {
           // this order will sort higher scores at the front
           public int compare(Individual c1, Individual c2) {
             return (int)Math.signum(c2.getFitness()-c1.getFitness());
