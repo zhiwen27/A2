@@ -50,7 +50,6 @@ public class Individual {
       for(int i = 0; i < c_0; i++){
         this.chromosome.add(this.randomLetter(num_letters));
       }
-      System.err.println(chromosome);
     }
 
      /**
@@ -70,7 +69,7 @@ public class Individual {
       for(int i = 0; i < prefix; i++){
         this.chromosome.add(parent1.chromosome.get(i));
       }
-
+      
       for(int i = parent2.chromosome.size() - suffix; i < parent2.chromosome.size(); i++){
         this.chromosome.add(parent2.chromosome.get(i));
       }
@@ -80,16 +79,12 @@ public class Individual {
           this.chromosome.removeLast();
         }
       }
-
-      System.err.println(this.chromosome);
       
       for(int i = 0; i < this.chromosome.size(); i++){
         if (this.doesMutate(m)){
           this.chromosome.set(i, this.randomLetter(num_letters));
         }
       }
-
-      System.err.println(this.chromosome);
     }
 
 

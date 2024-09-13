@@ -76,7 +76,7 @@ public class GA_Simulation {
 
   public void describeGeneration(ArrayList<Individual> gen){
     this.rankPopulation(gen);
-    System.err.println("The fitness of the fittest individual is: " + gen.getFirst().getFitness() + " with its actual chromosome to be: " + gen.getFirst());
+    System.err.println("The fitness of the fittest individual is: " + gen.getFirst().getFitness() + ", with its actual chromosome to be: " + gen.getFirst());
     System.err.println("The kth individual with its actual chromosome to be: " + gen.get(k - 1)); // do we need to print this?
     System.err.println("The least fit individual with its actual chromosome to be: " + gen.getLast());
   }
