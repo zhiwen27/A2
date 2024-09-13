@@ -24,7 +24,7 @@ public class Individual {
      * @return true if a number randomly chosen between 0 and 1 is less than ***m***, else false
     */
     private Boolean doesMutate(double m){
-        double randomNum = ThreadLocalRandom.current().nextInt(0, 1);
+        double randomNum = ThreadLocalRandom.current().nextDouble(0, 1);
         return randomNum < m;
     }
 
@@ -61,27 +61,37 @@ public class Individual {
       * @param m The chances per round of mutation in each gene
       */
     public Individual(Individual parent1, Individual parent2, int c_max, double m, int num_letters) {
-      int prefix = ThreadLocalRandom.current().nextInt(0, parent1.chromosome.size());
-      int suffix = ThreadLocalRandom.current().nextInt(0, parent2.chromosome.size());
+
+      this.chromosome = new ArrayList<Character>();
+
+      int prefix = ThreadLocalRandom.current().nextInt(0, parent1.chromosome.size() + 1);
+      int suffix = ThreadLocalRandom.current().nextInt(0, parent2.chromosome.size() + 1);
+      
       for(int i = 0; i < prefix; i++){
         this.chromosome.add(parent1.chromosome.get(i));
       }
-      for(int i = parent2.chromosome.size(); i > (parent2.chromosome.size() - suffix); i--){
+
+      for(int i = parent2.chromosome.size() - suffix; i < parent2.chromosome.size(); i++){
         this.chromosome.add(parent2.chromosome.get(i));
       }
-      if ((prefix + suffix) > c_max){
-        for (int i = (prefix + suffix); i < c_max; i++){
+
+      if (this.chromosome.size() > c_max){
+        while (this.chromosome.size() > c_max){
           this.chromosome.removeLast();
         }
       }
+
       System.err.println(this.chromosome);
+      
       for(int i = 0; i < this.chromosome.size(); i++){
         if (this.doesMutate(m)){
           this.chromosome.set(i, this.randomLetter(num_letters));
         }
       }
+
       System.err.println(this.chromosome);
     }
+
 
     /**
      * Calculates the fitness score of each chromosome
