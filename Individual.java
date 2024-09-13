@@ -61,9 +61,15 @@ public class Individual {
       * @param m The chances per round of mutation in each gene
       */
     public Individual(Individual parent1, Individual parent2, int c_max, double m, int num_letters) {
-      
-      Individual newgen;
-      // fill in
+      int prefix = ThreadLocalRandom.current().nextInt(0, parent1.chromosome.size());
+      int suffix = ThreadLocalRandom.current().nextInt(0, parent2.chromosome.size());
+      Individual newgen = new Individual(prefix + suffix, num_letters);
+      if ((prefix + suffix) > c_max){
+        for (int i = (prefix + suffix); i < c_max; i++){
+          newgen.chromosome.removeLast();
+        }
+      }
+      System.err.println(newgen.chromosome);
     }
 
     /**
