@@ -106,7 +106,6 @@ public class Individual {
       }
       else{
         this.chromosome.add((this.chromosome.size() - 1) / 2, this.chromosome.get((this.chromosome.size() - 1) / 2));
-        System.err.println(this.chromosome);
         for(int i = 0; i < this.chromosome.size() / 2; i++){
           if (this.chromosome.get(i).equals(this.chromosome.get(this.chromosome.size() - i - 1))){
             score += 1;

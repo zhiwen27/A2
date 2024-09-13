@@ -2,7 +2,7 @@
 
 # Your readme should include the following information. Each student needs to submit all of this information themselves, even when pair programming. 
 
-Group Members:
+Group Members: Emily Wang, Zhiwen Ji
 
 Any peers and/or TAs/Tutors you collaborated with:
 

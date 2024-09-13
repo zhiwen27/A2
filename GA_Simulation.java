@@ -83,13 +83,15 @@ public class GA_Simulation {
 
   public void run(){
     this.init();
+    System.err.println("Generation 1:");
     this.describeGeneration(this.firstGeneration);
     for(int i = 0; i < r; i++){
+      System.err.println("Generation " + (i + 2) + ":");
       this.describeGeneration(this.evolvePopulation());
     }
   }
   public static void main(String[] args) {
-    GA_Simulation test = new GA_Simulation(100, 15, 20, 8, 10, 0.01, 5);
+    GA_Simulation test = new GA_Simulation(15, 15, 5, 2, 5, 0.01, 5);
     test.run();
   }
 }
