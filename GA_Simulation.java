@@ -11,27 +11,28 @@ public class GA_Simulation {
   private int c_0; // the initial chromosome size
   private int c_max; // the maximum chromosome size
   private double m; // chance per round of a mutation in each gene
-  private int g; // number of states possible per gene
-  private int num_letters;
+  private int num_letters; // number of states possible per gene
 
-  ArrayList<Individual> generation;
+  ArrayList<Individual> firstGeneration;
 
-  public GA_Simulation(){
-    this.n = 100;
-    this.k = 15;
-    this.r = 100;
-    this.c_0 = 8;
-    this.c_max = 20;
-    this.m = 0.01;
-    this.g = 5;
-    this.generation = new ArrayList<Individual>(n);
+  public GA_Simulation(int n, int k, int r, int c_0, int c_max, double m, int num_letters){
+    this.n = n;
+    this.k = k;
+    this.r = r;
+    this.c_0 = c_0;
+    this.c_max = c_max;
+    this.m = m;
+    this.num_letters = num_letters;
+    this.firstGeneration = new ArrayList<Individual>(n);
   }
   
-  public void init(int num_letters){
-    this.num_letters = num_letters;
+  /**
+   * Initialize the first generation
+   */
+  public void init(){
     for(int i = 0; i < this.n; i++){
-      Individual newGenTemp = new Individual(this.c_0, num_letters);
-      this.generation.add(newGenTemp);
+      Individual newGenTemp = new Individual(this.c_0, this.num_letters);
+      this.firstGeneration.add(newGenTemp);
     }
   }
 
@@ -55,11 +56,11 @@ public class GA_Simulation {
    * @return return the created new generation
    */
   public ArrayList<Individual> evolvePopulation(){
-    this.rankPopulation(this.generation);
+    this.rankPopulation(this.firstGeneration);
     ArrayList<Individual> selectGen = new ArrayList<Individual>(k);
     ArrayList<Individual> newGen = new ArrayList<Individual>(n);
     for(int i = 0; i < k; i++){
-      selectGen.add(this.generation.get(i));
+      selectGen.add(this.firstGeneration.get(i));
     }
     for(int i = 0; i < n; i++){
       int parentIndex1 = ThreadLocalRandom.current().nextInt(0, k);
@@ -71,5 +72,24 @@ public class GA_Simulation {
       newGen.add(newGenTemp);
     }
     return newGen;
+  }
+
+  public void describeGeneration(ArrayList<Individual> gen){
+    this.rankPopulation(gen);
+    System.err.println("The fitness of the fittest individual is: " + gen.getFirst().getFitness() + " with its actual chromosome to be: " + gen.getFirst());
+    System.err.println("The kth individual with its actual chromosome to be: " + gen.get(k - 1));
+    System.err.println("The least fit individual with its actual chromosome to be: " + gen.getLast());
+  }
+
+  public void run(){
+    this.init();
+    this.describeGeneration(this.firstGeneration);
+    for(int i = 0; i < r; i++){
+      this.describeGeneration(this.evolvePopulation());
+    }
+  }
+  public static void main(String[] args) {
+    GA_Simulation test = new GA_Simulation(100, 15, 100, 8, 20, 0.01, 5);
+    test.run();
   }
 }
