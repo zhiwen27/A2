@@ -12,7 +12,7 @@ public class GA_Simulation {
   private int c_0; // the initial chromosome size
   private int c_max; // the maximum chromosome size
   private double m; // chance per round of a mutation in each gene
-  private int num_letters; // number of states possible per gene
+  private int num_letters; // number of states possible per gene (g)
 
   ArrayList<Individual> firstGeneration; // the ArrayList to store the first generation
 
@@ -67,6 +67,7 @@ public class GA_Simulation {
    * @return return the created new generation
    */
   public ArrayList<Individual> evolvePopulation(ArrayList<Individual> gen){
+    // first rank the generation and select the winners
     this.rankPopulation(gen);
     ArrayList<Individual> selectGen = new ArrayList<Individual>(k);
     ArrayList<Individual> newGen = new ArrayList<Individual>(n);
@@ -77,6 +78,7 @@ public class GA_Simulation {
     for(Individual i: selectGen){
       System.err.println(i);
     }
+    // randomly select two parents and create a new individual
     for(int i = 0; i < n; i++){
       int parentIndex1 = ThreadLocalRandom.current().nextInt(0, k);
       int parentIndex2 = ThreadLocalRandom.current().nextInt(0, k);
@@ -106,12 +108,14 @@ public class GA_Simulation {
    * For each round, it will evolve the population, rank it, and describe it.
    */
   public void run(){
+    // initialize the first generation and do the description
     this.init();
     System.err.println("Generation 1:");
     for(Individual i: this.firstGeneration){
       System.err.println(i);
     }
     this.describeGeneration(this.firstGeneration);
+    // evolve the first generation
     ArrayList<Individual> temp = new ArrayList<Individual>(n);
     ArrayList<Individual> newGen = new ArrayList<Individual>(n);
     temp = this.evolvePopulation(this.firstGeneration);
@@ -127,7 +131,7 @@ public class GA_Simulation {
     }
   }
   public static void main(String[] args) {
-    GA_Simulation test = new GA_Simulation(100, 15, 10, 8, 20, 0.01, 5);
+    GA_Simulation test = new GA_Simulation(100, 15, 100, 8, 20, 0.01, 5);
     //GA_Simulation test = new GA_Simulation(5, 5, 5, 3, 5, 0.01, 3);
     test.run();
   }

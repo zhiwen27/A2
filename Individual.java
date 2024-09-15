@@ -74,12 +74,14 @@ public class Individual {
         this.chromosome.add(parent2.chromosome.get(i));
       }
 
+      // Remove the elements that are longer than c_max
       if (this.chromosome.size() > c_max){
         while (this.chromosome.size() > c_max){
           this.chromosome.removeLast();
         }
       }
       
+      // Do mutation
       for(int i = 0; i < this.chromosome.size(); i++){
         if (this.doesMutate(m)){
           this.chromosome.set(i, this.randomLetter(num_letters));
@@ -90,14 +92,16 @@ public class Individual {
 
     /**
      * Calculates the fitness score of each chromosome
-     * @return The fitness score as an int
+     * @return the fitness score as an int
      */
     public int getFitness() {
       int score = 0;
+      // Create a deep copy of chromosome to avoid changing the original gene
       ArrayList<Character> chromosomeCopy = new ArrayList<Character>();
       for(int i = 0; i < this.chromosome.size(); i++){
         chromosomeCopy.add(this.chromosome.get(i));
       }
+      // Do the fitness score according to the given rule
       if (chromosomeCopy.size()%2 == 0){
         for(int i = 0; i < chromosomeCopy.size() / 2; i++){
           if (chromosomeCopy.get(i).equals(chromosomeCopy.get(chromosomeCopy.size() - i - 1))){
@@ -127,8 +131,10 @@ public class Individual {
       return score;
     }
 
+    /*
     public static void main(String[] args) {
       Individual a = new Individual(3, 3);
       System.err.println(a.getFitness());
     }
+    */
 }
